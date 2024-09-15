@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import ContainerCards from "./Components/ContainerCards";
 import Paginacion from "./Components/Paginacion";
 
-const urlApi = 'https://rickandmortyapi.com/api/character';
+// const urlApi = 'https://rickandmortyapi.com/api/character';
 
 // fetch(urlApi)
 //   .then(res => {
@@ -24,10 +24,10 @@ function App() {
   const [info, setInfo] = useState({});
 
   // Llamar a la api 
-  const fetchPersonajes = async () => {
+  const fetchPersonajes = async (url) => {
     try {
       // Realizar el fetch
-      const res = await fetch(urlApi);
+      const res = await fetch(url);
       // Mensaje de error si REspuesta != 200
       if(!res.ok){
         throw new Error('Mensaje de error: ' + res.status);
@@ -38,9 +38,6 @@ function App() {
       // Cargar el resultado en el hook useState()
       setPersonajes(data.results);
       setInfo(data.info)
-      console.log(data.results)
-      console.log(data.info)
-      // return data;
     } catch (error) {
       console.log(error.message);
     }
@@ -48,17 +45,17 @@ function App() {
 
   //pagina siguiente 
   const onNext = () => {
-    console.log(info.next);
+    fetchPersonajes(info.next);
   }
   
   // pagina anterior
   const onPrev = () => {
-    console.log(info.prev)
+    fetchPersonajes(info.prev);
   }
 
   // Llamar a la funcion asíncrona al renderizar la pagina
   useEffect( () => {
-    fetchPersonajes();
+    fetchPersonajes('https://rickandmortyapi.com/api/character');
   }, []);
 
   const title = 'Rick & Morty';
@@ -66,7 +63,7 @@ function App() {
   return (
     <>
       <Header title={title}/>
-      <Paginacion />
+      <Paginacion onSiguiente={onNext} onAnterior={onPrev}/>
       <ContainerCards personajes={personajes} />
       
       {/* {personajes.map( item => (
