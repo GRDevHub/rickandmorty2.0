@@ -68,7 +68,17 @@ function App() {
         onAnterior={ onPrev }
         siguiente={ info.next }
         anterior={ info.prev } />
-      <ContainerCards personajes={personajes} />
+        <div className="container mt-4">
+          { personajes.length === 0 
+            ? <p className="text-primary text-bold">Loading...</p>
+            : <ContainerCards personajes={personajes} />
+          }
+        </div>
+      <Paginacion 
+        onSiguiente={ onNext } 
+        onAnterior={ onPrev }
+        siguiente={ info.next }
+        anterior={ info.prev } />
       
       {/* {personajes.map( item => (
           <h2 key={item.id}>{item.name}</h2>
