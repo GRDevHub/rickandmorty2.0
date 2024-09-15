@@ -63,7 +63,11 @@ function App() {
   return (
     <>
       <Header title={title}/>
-      <Paginacion onSiguiente={onNext} onAnterior={onPrev}/>
+      <Paginacion 
+        onSiguiente={ onNext } 
+        onAnterior={ onPrev }
+        siguiente={ info.next }
+        anterior={ info.prev } />
       <ContainerCards personajes={personajes} />
       
       {/* {personajes.map( item => (
